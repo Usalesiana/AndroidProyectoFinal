@@ -29,10 +29,10 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if(destination.id == R.id.FirstFragment) {
                 binding.fab.show()
-                menu?.findItem(R.id.action_settings)?.isVisible = true
+                menu?.findItem(R.id.action_settings)?.isVisible = false
             } else {
                 binding.fab.hide()
-                menu?.findItem(R.id.action_settings)?.isVisible = false
+                menu?.findItem(R.id.action_settings)?.isVisible = true
             }
         }
         appBarConfiguration = AppBarConfiguration(navController.graph)
@@ -47,6 +47,7 @@ class MainActivity : AppCompatActivity() {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
         this.menu = menu
+        menu.findItem(R.id.action_settings).isVisible = false
         return true
     }
 
