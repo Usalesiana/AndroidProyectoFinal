@@ -6,8 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.projectfinalandroid.databinding.FragmentFirstBinding
 import com.example.projectfinalandroid.models.Note
 
@@ -33,7 +33,11 @@ class FirstFragment : Fragment() {
             Note("2024-06-29", "Title 2", "Body 2", 34.0522, -118.2437)
         )
 
-        noteAdapter = NoteAdapter(notes)
+        noteAdapter = NoteAdapter(notes) { note ->
+            // Handle item click
+            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+        }
+
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = noteAdapter

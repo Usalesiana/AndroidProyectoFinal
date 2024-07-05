@@ -6,7 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.projectfinalandroid.R
 import com.example.projectfinalandroid.models.Note
 
-class NoteAdapter(private val noteList: List<Note>) : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
+class NoteAdapter(
+    private val noteList: List<Note>,
+    private val onItemClick: (Note) -> Unit
+) : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
 
     class NoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvTitle: TextView = itemView.findViewById(R.id.tvTitle)
@@ -22,6 +25,10 @@ class NoteAdapter(private val noteList: List<Note>) : RecyclerView.Adapter<NoteA
         val currentNote = noteList[position]
         holder.tvTitle.text = currentNote.title
         holder.tvDate.text = currentNote.dateCreated
+
+        holder.itemView.setOnClickListener {
+            onItemClick(currentNote)
+        }
     }
 
     override fun getItemCount() = noteList.size
