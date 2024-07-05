@@ -15,6 +15,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import com.example.projectfinalandroid.databinding.FragmentLoginBinding
 
 import com.example.projectfinalandroid.R
@@ -108,6 +109,7 @@ private var _binding: FragmentLoginBinding? = null
                 usernameEditText.text.toString(),
                 passwordEditText.text.toString()
             )
+            findNavController().navigate(R.id.action_loginFragment_to_FirstFragment)
         }
     }
 
