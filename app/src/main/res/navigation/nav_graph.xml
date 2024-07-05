@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/FirstFragment"
         android:name="com.example.projectfinalandroid.FirstFragment"
-        android:label="Lista de Notas"
+        android:label="@string/lista_de_notas"
         tools:layout="@layout/fragment_first">
 
         <action
@@ -28,7 +28,7 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.projectfinalandroid.ui.login.LoginFragment"
-        android:label="fragment_login"
+        android:label="@string/inciar_sesi_n"
         tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/action_loginFragment_to_FirstFragment"
