@@ -15,6 +15,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+    private var menu: Menu? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,19 +26,28 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
 
         val navController = findNavController(R.id.nav_host_fragment_content_main)
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if(destination.id == R.id.FirstFragment) {
+                binding.fab.show()
+                menu?.findItem(R.id.action_settings)?.isVisible = false
+            } else {
+                binding.fab.hide()
+                menu?.findItem(R.id.action_settings)?.isVisible = true
+            }
+        }
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-        binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null)
-                .setAnchorView(R.id.fab).show()
+        binding.fab.setOnClickListener {
+            navController.navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
+        this.menu = menu
+        menu.findItem(R.id.action_settings).isVisible = false
         return true
     }
 
