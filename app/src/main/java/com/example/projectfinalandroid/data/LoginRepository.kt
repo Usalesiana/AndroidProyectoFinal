@@ -6,7 +6,6 @@ import com.example.projectfinalandroid.data.model.LoggedInUser
  * Class that requests authentication and user information from the remote data source and
  * maintains an in-memory cache of login status and user credentials information.
  */
-
 class LoginRepository(val dataSource: LoginDataSource) {
 
     // in-memory cache of the loggedInUser object
@@ -27,15 +26,13 @@ class LoginRepository(val dataSource: LoginDataSource) {
         dataSource.logout()
     }
 
-    fun login(username: String, password: String): Result<LoggedInUser> {
-        // handle login
-        val result = dataSource.login(username, password)
-
-        if (result is Result.Success) {
-            setLoggedInUser(result.data)
+    fun login(username: String, password: String, callback: (Result<LoggedInUser>) -> Unit) {
+        dataSource.login(username, password) { result ->
+            if (result is Result.Success) {
+                setLoggedInUser(result.data)
+            }
+            callback(result)
         }
-
-        return result
     }
 
     private fun setLoggedInUser(loggedInUser: LoggedInUser) {

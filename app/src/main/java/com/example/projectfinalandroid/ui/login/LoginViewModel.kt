@@ -1,11 +1,12 @@
 package com.example.projectfinalandroid.ui.login
 
+import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import android.util.Patterns
 import com.example.projectfinalandroid.data.LoginRepository
 import com.example.projectfinalandroid.data.Result
+import com.example.projectfinalandroid.data.model.LoggedInUser
 
 import com.example.projectfinalandroid.R
 
@@ -19,12 +20,12 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
 
     fun login(username: String, password: String) {
         // can be launched in a separate asynchronous job
-        val result = loginRepository.login(username, password)
-
-        if (result is Result.Success) {
-            _loginResult.value = LoginResult(success = LoggedInUserView(displayName = result.data.displayName))
-        } else {
-            _loginResult.value = LoginResult(error = R.string.login_failed)
+        loginRepository.login(username, password) { result ->
+            if (result is Result.Success) {
+                _loginResult.postValue(LoginResult(success = LoggedInUserView(displayName = result.data.displayName)))
+            } else {
+                _loginResult.postValue(LoginResult(error = R.string.login_failed))
+            }
         }
     }
 
