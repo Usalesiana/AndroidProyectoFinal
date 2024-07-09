@@ -34,7 +34,6 @@ class FirstFragment : Fragment() {
         )
 
         noteAdapter = NoteAdapter(notes) { note ->
-            // Handle item click
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
 

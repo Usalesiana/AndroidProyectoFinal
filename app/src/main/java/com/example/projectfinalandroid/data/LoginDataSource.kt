@@ -12,9 +12,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.io.IOException
 
-/**
- * Class that handles authentication w/ login credentials and retrieves user information.
- */
 class LoginDataSource(private val context: Context) {
 
     private val sharedPreferences: SharedPreferences = context.getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
@@ -29,7 +26,6 @@ class LoginDataSource(private val context: Context) {
                     val jsonElement = JsonParser.parseString(response.body())
                     val userId = jsonElement.asJsonObject.get("user_id").asString
 
-                    // Save userId in SharedPreferences
                     saveUserId(userId)
 
                     val user = LoggedInUser(java.util.UUID.randomUUID().toString(), userId)

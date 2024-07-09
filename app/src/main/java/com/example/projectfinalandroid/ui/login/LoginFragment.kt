@@ -42,10 +42,8 @@ class LoginFragment : Fragment() {
         val loginButton = binding.login
         val loadingProgressBar = binding.loading
 
-        // Check if userId is stored
         val userId = getUserIdFromStorage()
         if (userId != null) {
-            // User is already logged in, navigate to the next fragment
             findNavController().navigate(R.id.action_loginFragment_to_FirstFragment)
             return
         }
@@ -79,11 +77,9 @@ class LoginFragment : Fragment() {
 
         val afterTextChangedListener = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-                // ignore
             }
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                // ignore
             }
 
             override fun afterTextChanged(s: Editable) {
