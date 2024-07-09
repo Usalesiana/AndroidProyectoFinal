@@ -72,6 +72,7 @@ private var _binding: FragmentLoginBinding? = null
                 }
                 loginResult.success?.let {
                     updateUiWithUser(it)
+                    findNavController().navigate(R.id.action_loginFragment_to_FirstFragment)
                 }
             })
 
@@ -109,7 +110,6 @@ private var _binding: FragmentLoginBinding? = null
                 usernameEditText.text.toString(),
                 passwordEditText.text.toString()
             )
-            findNavController().navigate(R.id.action_loginFragment_to_FirstFragment)
         }
     }
 
