@@ -4,6 +4,7 @@ import com.example.projectfinalandroid.api.NotesApiService
 import com.example.projectfinalandroid.api.RetrofitInstance
 import com.example.projectfinalandroid.api.LoginRequest
 import com.example.projectfinalandroid.data.model.LoggedInUser
+import com.google.gson.JsonParser
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -21,9 +22,11 @@ class LoginDataSource {
         loginService.login(LoginRequest(username, password)).enqueue(object : Callback<String> {
             override fun onResponse(call: Call<String>, response: Response<String>) {
                 if (response.isSuccessful && response.body() != null) {
-                    // Assuming successful login returns user details or similar
-                    val fakeUser = LoggedInUser(java.util.UUID.randomUUID().toString(), "Jane Doe")
-                    callback(Result.Success(fakeUser))
+                    val jsonElement = JsonParser.parseString(response.body())
+                    val userId = jsonElement.asJsonObject.get("user_id").asString
+
+                    val user = LoggedInUser(java.util.UUID.randomUUID().toString(), userId)
+                    callback(Result.Success(user))
                 } else {
                     callback(Result.Error(IOException("Error logging in, response unsuccessful")))
                 }
