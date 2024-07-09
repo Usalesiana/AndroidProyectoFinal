@@ -1,5 +1,6 @@
 package com.example.projectfinalandroid.ui.login
 
+import android.content.Context
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.annotation.StringRes
@@ -11,21 +12,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.example.projectfinalandroid.databinding.FragmentLoginBinding
-
 import com.example.projectfinalandroid.R
 
 class LoginFragment : Fragment() {
 
     private lateinit var loginViewModel: LoginViewModel
-private var _binding: FragmentLoginBinding? = null
-    // This property is only valid between onCreateView and
-    // onDestroyView.
+    private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -33,21 +28,27 @@ private var _binding: FragmentLoginBinding? = null
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-      _binding = FragmentLoginBinding.inflate(inflater, container, false)
-      return binding.root
-
+        _binding = FragmentLoginBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
+        loginViewModel = ViewModelProvider(this, LoginViewModelFactory(this.requireContext()))
             .get(LoginViewModel::class.java)
 
         val usernameEditText = binding.username
         val passwordEditText = binding.password
         val loginButton = binding.login
         val loadingProgressBar = binding.loading
+
+        // Check if userId is stored
+        val userId = getUserIdFromStorage()
+        if (userId != null) {
+            // User is already logged in, navigate to the next fragment
+            findNavController().navigate(R.id.action_loginFragment_to_FirstFragment)
+            return
+        }
 
         loginViewModel.loginFormState.observe(viewLifecycleOwner,
             Observer { loginFormState ->
@@ -115,7 +116,6 @@ private var _binding: FragmentLoginBinding? = null
 
     private fun updateUiWithUser(model: LoggedInUserView) {
         val welcome = getString(R.string.welcome) + model.displayName
-        // TODO : initiate successful logged in experience
         val appContext = context?.applicationContext ?: return
         Toast.makeText(appContext, welcome, Toast.LENGTH_LONG).show()
     }
@@ -125,7 +125,12 @@ private var _binding: FragmentLoginBinding? = null
         Toast.makeText(appContext, errorString, Toast.LENGTH_LONG).show()
     }
 
-override fun onDestroyView() {
+    private fun getUserIdFromStorage(): String? {
+        val sharedPreferences = requireContext().getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+        return sharedPreferences.getString("user_id", null)
+    }
+
+    override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
