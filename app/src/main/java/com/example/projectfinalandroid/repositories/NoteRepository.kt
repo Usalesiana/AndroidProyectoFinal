@@ -10,17 +10,6 @@ class NoteRepository(private val noteDao: NoteDao,
                      private val noteApiService: NoteApiService) {
     val notes = noteDao.getAllNotes()
 
-    suspend fun insert (note: Note){
-        noteDao.insertNote(note)
-    }
-
-    suspend fun update (note: Note){
-        noteApiService.putNote(note)
-    }
-    suspend fun delete(id: String) {
-        noteApiService.deleteNote(id)
-    }
-
     fun getAll() = flow {
         val result = noteApiService.getNotes()
         if (result.isSuccessful() && result.body() != null){
@@ -37,8 +26,6 @@ class NoteRepository(private val noteDao: NoteDao,
         if (response.isSuccessful){
             getAll().collect(){
             }
-        } else {
-            //no hace nada
         }
     }
 
@@ -55,7 +42,7 @@ class NoteRepository(private val noteDao: NoteDao,
         if (response.isSuccessful){
             getAll().collect(){}
         } else {
-            error("no se elimino")
+            error("No se pudo eliminar la nota")
         }
     }
 }

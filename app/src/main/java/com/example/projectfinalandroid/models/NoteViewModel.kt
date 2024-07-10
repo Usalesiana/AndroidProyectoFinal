@@ -46,7 +46,7 @@ class NoteViewModel(val repository: NoteRepository) : ViewModel() {
                 }
             } else {
                 val newNote = Note(
-                    id = "wertyui",
+                    id = "",
                     dateCreated = formetDate(),
                     title = title.value!!,
                     description = description.value!!,
@@ -100,7 +100,7 @@ class NoteViewModel(val repository: NoteRepository) : ViewModel() {
     fun getAllContacts() = viewModelScope.launch {
         repository.getAll().collect { result ->
             if (!result) {
-                //mostrar errores aca de la api
+                //API errors
             }
         }
     }
