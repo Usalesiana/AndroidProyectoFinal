@@ -12,8 +12,7 @@ import com.example.projectfinalandroid.models.Note
 @Dao
 interface NoteDao {
     @Insert
-    suspend fun insertNote(note: Note): Long
-
+    suspend fun insertNote(note: Note)
     @Update
     suspend fun updateNote(note: Note)
     @Delete

@@ -54,7 +54,7 @@ class SecondFragment : Fragment() {
 
         binding.buttonDelete.setOnClickListener {
             viewModel.selectedNote?.let { note ->
-                viewModel.delete(note)
+                viewModel.delete(note.id)
             }
             findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
         }

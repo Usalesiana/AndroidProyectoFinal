@@ -4,6 +4,7 @@ import com.example.projectfinalandroid.api.NoteApiService
 import com.example.projectfinalandroid.models.Note
 import com.example.projectfinalandroid.room.NoteDao
 import kotlinx.coroutines.flow.flow
+import retrofit2.awaitResponse
 
 class NoteRepository(private val noteDao: NoteDao,
                      private val noteApiService: NoteApiService) {
@@ -14,10 +15,10 @@ class NoteRepository(private val noteDao: NoteDao,
     }
 
     suspend fun update (note: Note){
-        noteDao.updateNote(note)
+        noteApiService.putNote(note)
     }
-    suspend fun delete(note: Note) {
-        noteDao.deleteNote(note)
+    suspend fun delete(id: String) {
+        noteApiService.deleteNote(id)
     }
 
     fun getAll() = flow {
@@ -27,6 +28,34 @@ class NoteRepository(private val noteDao: NoteDao,
             emit(true)
         } else {
         emit(false)
+        }
+    }
+
+    suspend fun insertToApi(note: Note){
+        val call = noteApiService.postNote(note)
+        val response = call.awaitResponse()
+        if (response.isSuccessful){
+            getAll().collect(){
+            }
+        } else {
+            //no hace nada
+        }
+    }
+
+    suspend fun updateToApi(note: Note){
+        val call = noteApiService.putNote(note)
+        val response = call.awaitResponse()
+        if (response.isSuccessful){
+            getAll().collect(){}
+        }
+    }
+    suspend fun deleteToApi(noteId: String){
+        val call = noteApiService.deleteNote(noteId)
+        val response = call.awaitResponse()
+        if (response.isSuccessful){
+            getAll().collect(){}
+        } else {
+            error("no se elimino")
         }
     }
 }

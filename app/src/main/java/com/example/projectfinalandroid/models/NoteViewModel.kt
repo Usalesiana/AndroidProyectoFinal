@@ -15,14 +15,14 @@ class NoteViewModel(val repository: NoteRepository) : ViewModel() {
     val notes = repository.notes
 
     fun insert(note: Note) = viewModelScope.launch {
-        repository.insert(note)
+        repository.insertToApi(note)
     }
 
     fun update(note: Note) = viewModelScope.launch {
-        repository.update(note)
+        repository.updateToApi(note)
     }
-    fun delete(note: Note) = viewModelScope.launch {
-        repository.delete(note)
+    fun delete(id: String) = viewModelScope.launch {
+        repository.deleteToApi(id)
     }
 
     fun save() {
@@ -35,13 +35,13 @@ class NoteViewModel(val repository: NoteRepository) : ViewModel() {
                 }
             } else {
                 val newNote = Note(
-                    id = "",  // 0 to auto-generate the ID
+                    id = "wertyui",  // 0 to auto-generate the ID
                     dateCreated = "12/12/2024",  // replace with actual date
                     title = title.value!!,
                     description = description.value!!,
                     latitude = 234.23,  // replace with actual latitude
                     longitude = 234.34,  // replace with actual longitude
-                    userId = userId.value!!
+                    userId = "user_15"
                 )
                 insert(newNote)
             }
