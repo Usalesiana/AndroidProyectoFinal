@@ -27,6 +27,15 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
 
         val navController = findNavController(R.id.nav_host_fragment_content_main)
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if(destination.id == R.id.FirstFragment || destination.id == R.id.SecondFragment) {
+                binding.fab.hide()
+                menu?.findItem(R.id.action_logout)?.isVisible = true
+            } else {
+                binding.fab.show()
+                menu?.findItem(R.id.action_logout)?.isVisible = false
+            }
+        }
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
@@ -38,6 +47,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         this.menu = menu
+        menu.findItem(R.id.action_logout).isVisible = false
         return true
     }
 
