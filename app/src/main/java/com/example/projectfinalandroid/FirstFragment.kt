@@ -34,9 +34,18 @@ class FirstFragment : Fragment() {
         val factory = NoteViewModelFactory(requireContext())
         viewModel = ViewModelProvider(requireActivity(), factory).get(NoteViewModel::class.java)
 
-        noteAdapter = NoteRecyclerViewAdapter(emptyList()) {
-            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
-            viewModel.selectNote(it)
+        noteAdapter = NoteRecyclerViewAdapter(emptyList()) {note ->
+            val bundle = Bundle().apply {
+                putLong("id", note.id)
+                putString("dateCreated", note.dateCreated)
+                putString("title", note.title)
+                putString("description", note.description)
+                putDouble("latitude", note.latitude)
+                putDouble("longitude", note.longitude)
+            }
+
+            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment, bundle)
+            viewModel.selectNote(note)
         }
 
         binding.recyclerView.apply {
