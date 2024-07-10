@@ -36,6 +36,14 @@ class MainActivity : AppCompatActivity() {
                 menu?.findItem(R.id.action_logout)?.isVisible = false
             }
         }
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id == R.id.FirstFragment) {
+                binding.fab.show()
+            } else {
+                binding.fab.hide()
+            }
+        }
+
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
