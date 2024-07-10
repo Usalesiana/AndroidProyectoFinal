@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">ProjectFinalAndroid</string>
-    <string name="action_settings">Editar</string>
-    <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
@@ -51,8 +49,9 @@
     <string name="welcome">"Bienvenido: "</string>
     <string name="invalid_username">El correo no es válido</string>
     <string name="invalid_password">La contraseña es muy corta</string>
-    <string name="login_failed">"Inicio de Sesión fallido"</string>
+    <string name="login_failed">"Credenciales Incorrectas"</string>
     <string name="lista_de_notas">Lista de Notas</string>
     <string name="inciar_sesi_n">Inciar Sesión</string>
     <string name="guardar">Guardar</string>
+    <string name="cerrar_sesi_n">Cerrar Sesión</string>
 </resources>
