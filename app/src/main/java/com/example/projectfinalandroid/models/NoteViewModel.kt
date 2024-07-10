@@ -9,6 +9,7 @@ import kotlinx.coroutines.launch
 class NoteViewModel(val repository: NoteRepository) : ViewModel() {
     var title = MutableLiveData<String>()
     var description = MutableLiveData<String>()
+    var userId = MutableLiveData<String>()
     var selectedNote: Note? = null
 
     val notes = repository.notes
@@ -34,12 +35,13 @@ class NoteViewModel(val repository: NoteRepository) : ViewModel() {
                 }
             } else {
                 val newNote = Note(
-                    id = 0,  // 0 to auto-generate the ID
+                    id = "",  // 0 to auto-generate the ID
                     dateCreated = "12/12/2024",  // replace with actual date
                     title = title.value!!,
                     description = description.value!!,
                     latitude = 234.23,  // replace with actual latitude
-                    longitude = 234.34  // replace with actual longitude
+                    longitude = 234.34,  // replace with actual longitude
+                    userId = userId.value!!
                 )
                 insert(newNote)
             }
@@ -53,5 +55,17 @@ class NoteViewModel(val repository: NoteRepository) : ViewModel() {
         selectedNote = note
         title.value = note.title
         description.value = note.description
+    }
+    fun clearSelectedNote() {
+        selectedNote = null
+        title.value = ""
+        description.value = ""
+    }
+    fun getAllContacts() = viewModelScope.launch {
+        repository.getAll().collect() {result ->
+            if (!result){
+                //mostrar errores aca de la api
+            }
+        }
     }
 }

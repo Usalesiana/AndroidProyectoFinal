@@ -2,7 +2,7 @@ package com.example.projectfinalandroid.data
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.example.projectfinalandroid.api.NotesApiService
+import com.example.projectfinalandroid.api.LoginApiService
 import com.example.projectfinalandroid.api.RetrofitInstance
 import com.example.projectfinalandroid.api.LoginRequest
 import com.example.projectfinalandroid.data.model.LoggedInUser
@@ -18,7 +18,7 @@ class LoginDataSource(private val context: Context) {
 
     fun login(username: String, password: String, callback: (Result<LoggedInUser>) -> Unit) {
         val retrofit = RetrofitInstance.getInstance()
-        val loginService = retrofit.create(NotesApiService::class.java)
+        val loginService = retrofit.create(LoginApiService::class.java)
 
         loginService.login(LoginRequest(username, password)).enqueue(object : Callback<String> {
             override fun onResponse(call: Call<String>, response: Response<String>) {
