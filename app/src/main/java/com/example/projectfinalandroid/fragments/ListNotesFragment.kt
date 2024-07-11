@@ -1,4 +1,4 @@
-package com.example.projectfinalandroid
+package com.example.projectfinalandroid.fragments
 
 import NoteRecyclerViewAdapter
 import android.os.Bundle
@@ -9,12 +9,12 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.projectfinalandroid.R
 import com.example.projectfinalandroid.databinding.FragmentFirstBinding
-import com.example.projectfinalandroid.models.Note
-import com.example.projectfinalandroid.models.NoteViewModel
-import com.example.projectfinalandroid.models.NoteViewModelFactory
+import com.example.projectfinalandroid.viewModels.NoteViewModel
+import com.example.projectfinalandroid.viewModels.NoteViewModelFactory
 
-class FirstFragment : Fragment() {
+class ListNotesFragment : Fragment() {
     lateinit var noteAdapter: NoteRecyclerViewAdapter
     lateinit var viewModel: NoteViewModel
     private var _binding: FragmentFirstBinding? = null

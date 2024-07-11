@@ -1,22 +1,16 @@
-package com.example.projectfinalandroid.data
+package com.example.projectfinalandroid.repositories
 
-import com.example.projectfinalandroid.data.model.LoggedInUser
+import com.example.projectfinalandroid.data.LoginDataSource
+import com.example.projectfinalandroid.data.Result
+import com.example.projectfinalandroid.models.LoggedInUser
 
 class LoginRepository(val dataSource: LoginDataSource) {
 
     var user: LoggedInUser? = null
         private set
 
-    val isLoggedIn: Boolean
-        get() = user != null
-
     init {
         user = null
-    }
-
-    fun logout() {
-        user = null
-        dataSource.logout()
     }
 
     fun login(username: String, password: String, callback: (Result<LoggedInUser>) -> Unit) {

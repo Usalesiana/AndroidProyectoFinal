@@ -1,4 +1,4 @@
-package com.example.projectfinalandroid.data.model
+package com.example.projectfinalandroid.models
 
 data class LoggedInUser(
     val userId: String,

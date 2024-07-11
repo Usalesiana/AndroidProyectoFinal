@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="com.example.projectfinalandroid.FirstFragment"
+        android:name="com.example.projectfinalandroid.fragments.ListNotesFragment"
         android:label="@string/lista_de_notas"
         tools:layout="@layout/fragment_first">
 
@@ -20,7 +20,7 @@
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
-        android:name="com.example.projectfinalandroid.SecondFragment"
+        android:name="com.example.projectfinalandroid.fragments.DetailsNoteFragment"
         android:label="Nota"
         tools:layout="@layout/fragment_second">
 
@@ -30,7 +30,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.projectfinalandroid.ui.login.LoginFragment"
+        android:name="com.example.projectfinalandroid.fragments.LoginFragment"
         android:label="@string/inciar_sesi_n"
         tools:layout="@layout/fragment_login" >
         <action

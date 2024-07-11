@@ -1,10 +1,10 @@
-package com.example.projectfinalandroid.ui.login
+package com.example.projectfinalandroid.viewModels
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.projectfinalandroid.data.LoginDataSource
-import com.example.projectfinalandroid.data.LoginRepository
+import com.example.projectfinalandroid.repositories.LoginRepository
 
 class LoginViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
 
