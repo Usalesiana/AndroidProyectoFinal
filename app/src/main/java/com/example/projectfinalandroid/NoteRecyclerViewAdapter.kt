@@ -6,10 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.projectfinalandroid.R
 import com.example.projectfinalandroid.models.Note
 
-class NoteAdapter(
-    private val noteList: List<Note>,
+class NoteRecyclerViewAdapter(
+    private var noteList: List<Note>,
     private val onItemClick: (Note) -> Unit
-) : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
+) : RecyclerView.Adapter<NoteRecyclerViewAdapter.NoteViewHolder>() {
 
     class NoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvTitle: TextView = itemView.findViewById(R.id.tvTitle)
@@ -32,4 +32,10 @@ class NoteAdapter(
     }
 
     override fun getItemCount() = noteList.size
+
+    // Método para actualizar la lista de notas
+    fun updateNotes(newNotes: List<Note>) {
+        noteList = newNotes
+        notifyDataSetChanged()
+    }
 }

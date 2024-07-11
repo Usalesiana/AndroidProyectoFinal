@@ -1,21 +1,24 @@
 package com.example.projectfinalandroid
 
-import NoteAdapter
+import NoteRecyclerViewAdapter
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.projectfinalandroid.databinding.FragmentFirstBinding
 import com.example.projectfinalandroid.models.Note
+import com.example.projectfinalandroid.models.NoteViewModel
+import com.example.projectfinalandroid.models.NoteViewModelFactory
 
 class FirstFragment : Fragment() {
-
+    lateinit var noteAdapter: NoteRecyclerViewAdapter
+    lateinit var viewModel: NoteViewModel
     private var _binding: FragmentFirstBinding? = null
-    private val binding get() = _binding!!
-    private lateinit var noteAdapter: NoteAdapter
+    val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,18 +31,32 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val notes = listOf(
-            Note("2024-06-28", "Title 1", "Body 1", 37.7749, -122.4194),
-            Note("2024-06-29", "Title 2", "Body 2", 34.0522, -118.2437)
-        )
+        val factory = NoteViewModelFactory(requireContext())
+        viewModel = ViewModelProvider(requireActivity(), factory).get(NoteViewModel::class.java)
+        viewModel.getAllContacts()
 
-        noteAdapter = NoteAdapter(notes) { note ->
-            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+        noteAdapter = NoteRecyclerViewAdapter(emptyList()) {note ->
+            val bundle = Bundle().apply {
+                putString("id", note.id)
+                putString("dateCreated", note.dateCreated)
+                putString("title", note.title)
+                putString("description", note.description)
+                putDouble("latitude", note.latitude)
+                putDouble("longitude", note.longitude)
+                putString("userId", note.userId)
+            }
+
+            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment, bundle)
+            viewModel.selectNote(note)
         }
 
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = noteAdapter
+        }
+
+        viewModel.notes.observe(viewLifecycleOwner) { notes ->
+            noteAdapter.updateNotes(notes)
         }
     }
 

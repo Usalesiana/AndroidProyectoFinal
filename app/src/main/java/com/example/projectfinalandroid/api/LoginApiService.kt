@@ -10,7 +10,7 @@ data class LoginRequest(
     val password: String
 )
 
-interface NotesApiService {
+interface LoginApiService {
     @POST("/login")
     @Headers("Content-Type: application/json")
     fun login(@Body loginRequest: LoginRequest): Call<String>
