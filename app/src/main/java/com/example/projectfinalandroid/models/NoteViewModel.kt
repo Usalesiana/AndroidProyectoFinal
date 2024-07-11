@@ -1,15 +1,21 @@
 package com.example.projectfinalandroid.models
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.projectfinalandroid.repositories.NoteRepository
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Calendar
 
 class NoteViewModel(val repository: NoteRepository) : ViewModel() {
     var title = MutableLiveData<String>()
     var description = MutableLiveData<String>()
-    var userId = MutableLiveData<String>()
+    var userId = MutableLiveData<String?>()
+    var latitude = MutableLiveData<Double?>()
+    var longitude= MutableLiveData<Double?>()
+    var date = MutableLiveData<String>()
     var selectedNote: Note? = null
 
     val notes = repository.notes
@@ -21,6 +27,7 @@ class NoteViewModel(val repository: NoteRepository) : ViewModel() {
     fun update(note: Note) = viewModelScope.launch {
         repository.updateToApi(note)
     }
+
     fun delete(id: String) = viewModelScope.launch {
         repository.deleteToApi(id)
     }
@@ -31,22 +38,29 @@ class NoteViewModel(val repository: NoteRepository) : ViewModel() {
                 selectedNote?.let {
                     it.title = title.value!!
                     it.description = description.value!!
+                    it.userId = userId.value ?: ""
+                    it.latitude = latitude.value ?: 0.0
+                    it.longitude = longitude.value ?: 0.0
+                    it.dateCreated = date.value ?: formetDate()
                     update(it)
                 }
             } else {
                 val newNote = Note(
-                    id = "wertyui",  // 0 to auto-generate the ID
-                    dateCreated = "12/12/2024",  // replace with actual date
+                    id = "wertyui",
+                    dateCreated = formetDate(),
                     title = title.value!!,
                     description = description.value!!,
-                    latitude = 234.23,  // replace with actual latitude
-                    longitude = 234.34,  // replace with actual longitude
+                    latitude = latitude.value ?: 0.0,
+                    longitude = longitude.value ?: 0.0,
                     userId = "user_15"
                 )
                 insert(newNote)
             }
             title.value = ""
             description.value = ""
+            latitude.value = null
+            longitude.value = null
+            userId.value = null
             selectedNote = null
         }
     }
@@ -55,15 +69,37 @@ class NoteViewModel(val repository: NoteRepository) : ViewModel() {
         selectedNote = note
         title.value = note.title
         description.value = note.description
+        latitude.value = note.latitude
+        longitude.value = note.longitude
+        userId.value = note.userId
+        date.value = note.dateCreated
     }
+
     fun clearSelectedNote() {
         selectedNote = null
         title.value = ""
         description.value = ""
+        latitude.value = null
+        longitude.value = null
+        userId.value = null
+        date.value = ""
     }
+
+    fun setLocation(lat: Double, lon: Double) {
+        latitude.value = lat
+        longitude.value = lon
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    fun formetDate(): String {
+        val date = Calendar.getInstance().time
+        val formatter = SimpleDateFormat("yyyy.MM.dd")
+        return formatter.format(date)
+    }
+
     fun getAllContacts() = viewModelScope.launch {
-        repository.getAll().collect() {result ->
-            if (!result){
+        repository.getAll().collect { result ->
+            if (!result) {
                 //mostrar errores aca de la api
             }
         }
