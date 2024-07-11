@@ -1,6 +1,8 @@
 package com.example.projectfinalandroid.models
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,7 +11,7 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
 
-class NoteViewModel(val repository: NoteRepository) : ViewModel() {
+class NoteViewModel(val repository: NoteRepository, val context: Context) : ViewModel() {
     var title = MutableLiveData<String>()
     var description = MutableLiveData<String>()
     var userId = MutableLiveData<String?>()
@@ -17,6 +19,8 @@ class NoteViewModel(val repository: NoteRepository) : ViewModel() {
     var longitude= MutableLiveData<Double?>()
     var date = MutableLiveData<String>()
     var selectedNote: Note? = null
+
+    private val sharedPreferences: SharedPreferences = context.getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
 
     val notes = repository.notes
 
@@ -52,7 +56,7 @@ class NoteViewModel(val repository: NoteRepository) : ViewModel() {
                     description = description.value!!,
                     latitude = latitude.value ?: 0.0,
                     longitude = longitude.value ?: 0.0,
-                    userId = "user_15"
+                    userId = getUserId()?.replace("usuario", "user_") ?: "user_15"
                 )
                 insert(newNote)
             }
@@ -95,6 +99,10 @@ class NoteViewModel(val repository: NoteRepository) : ViewModel() {
         val date = Calendar.getInstance().time
         val formatter = SimpleDateFormat("yyyy.MM.dd")
         return formatter.format(date)
+    }
+
+    private fun getUserId(): String? {
+        return sharedPreferences.getString("user_id", null)
     }
 
     fun getAllNotes() = viewModelScope.launch {
