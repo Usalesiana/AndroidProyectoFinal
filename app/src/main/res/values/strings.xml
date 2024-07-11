@@ -54,4 +54,14 @@
     <string name="inciar_sesi_n">Inciar Sesión</string>
     <string name="guardar">Guardar</string>
     <string name="cerrar_sesi_n">Cerrar Sesión</string>
+    <string name="guardar2">Guardar</string>
+    <string name="eliminar">Eliminar</string>
+    <string name="t_tulo">Título</string>
+    <string name="descripci_n">Descripción</string>
+    <string name="ubicacion">Ubicacion</string>
+    <string name="ubicacion2">Ubicacion</string>
+    <string name="fecha">Fecha</string>
+    <string name="usuario">Usuario</string>
+    <string name="title">Title</string>
+    <string name="date">Date</string>
 </resources>

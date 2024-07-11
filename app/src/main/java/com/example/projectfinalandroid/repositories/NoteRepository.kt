@@ -37,6 +37,7 @@ class NoteRepository(private val noteDao: NoteDao,
         val call = noteApiService.putNote(note)
         val response = call.awaitResponse()
         if (response.isSuccessful){
+            noteDao.clearNotes()
             getAll().collect(){}
         }
     }
