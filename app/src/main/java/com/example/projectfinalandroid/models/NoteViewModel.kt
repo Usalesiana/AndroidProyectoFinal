@@ -97,7 +97,7 @@ class NoteViewModel(val repository: NoteRepository) : ViewModel() {
         return formatter.format(date)
     }
 
-    fun getAllContacts() = viewModelScope.launch {
+    fun getAllNotes() = viewModelScope.launch {
         repository.getAll().collect { result ->
             if (!result) {
                 //API errors

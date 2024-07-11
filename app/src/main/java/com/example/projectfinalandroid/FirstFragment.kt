@@ -33,7 +33,7 @@ class FirstFragment : Fragment() {
 
         val factory = NoteViewModelFactory(requireContext())
         viewModel = ViewModelProvider(requireActivity(), factory).get(NoteViewModel::class.java)
-        viewModel.getAllContacts()
+        viewModel.getAllNotes()
 
         noteAdapter = NoteRecyclerViewAdapter(emptyList()) {note ->
             val bundle = Bundle().apply {

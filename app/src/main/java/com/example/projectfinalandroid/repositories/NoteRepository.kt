@@ -40,6 +40,7 @@ class NoteRepository(private val noteDao: NoteDao,
     suspend fun deleteToApi(noteId: String) {
         val response = noteApiService.deleteNote(NoteId(noteId))
         if (response.isSuccessful) {
+            noteDao.clearNotes()
             getAll().collect {}
         } else {
             error("No se pudo eliminar la nota")

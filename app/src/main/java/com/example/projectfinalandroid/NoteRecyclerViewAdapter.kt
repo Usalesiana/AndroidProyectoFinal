@@ -1,3 +1,4 @@
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,8 +35,10 @@ class NoteRecyclerViewAdapter(
     override fun getItemCount() = noteList.size
 
     // Método para actualizar la lista de notas
+    @SuppressLint("NotifyDataSetChanged")
     fun updateNotes(newNotes: List<Note>) {
         noteList = newNotes
         notifyDataSetChanged()
     }
+
 }
