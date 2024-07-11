@@ -1,4 +1,4 @@
-package com.example.projectfinalandroid.models
+package com.example.projectfinalandroid.viewModels
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.projectfinalandroid.models.Note
 import com.example.projectfinalandroid.repositories.NoteRepository
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat

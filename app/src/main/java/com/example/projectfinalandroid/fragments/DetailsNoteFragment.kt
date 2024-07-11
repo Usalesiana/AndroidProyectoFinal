@@ -1,4 +1,4 @@
-package com.example.projectfinalandroid
+package com.example.projectfinalandroid.fragments
 
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -11,15 +11,15 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.projectfinalandroid.databinding.FragmentSecondBinding
 import com.example.projectfinalandroid.models.Note
-import com.example.projectfinalandroid.models.NoteViewModel
+import com.example.projectfinalandroid.viewModels.NoteViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import android.Manifest
-import android.net.Uri
 import androidx.activity.result.contract.ActivityResultContracts
+import com.example.projectfinalandroid.R
 
 
-class SecondFragment : Fragment() {
+class DetailsNoteFragment : Fragment() {
     private var _binding: FragmentSecondBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModel: NoteViewModel

@@ -1,4 +1,4 @@
-package com.example.projectfinalandroid.ui.login
+package com.example.projectfinalandroid.fragments
 
 import android.content.Context
 import androidx.lifecycle.Observer
@@ -14,8 +14,11 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
-import com.example.projectfinalandroid.databinding.FragmentLoginBinding
 import com.example.projectfinalandroid.R
+import com.example.projectfinalandroid.databinding.FragmentLoginBinding
+import com.example.projectfinalandroid.models.LoggedInUserView
+import com.example.projectfinalandroid.viewModels.LoginViewModel
+import com.example.projectfinalandroid.viewModels.LoginViewModelFactory
 
 class LoginFragment : Fragment() {
 

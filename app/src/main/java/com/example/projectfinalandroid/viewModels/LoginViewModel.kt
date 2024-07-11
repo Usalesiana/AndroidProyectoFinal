@@ -1,14 +1,16 @@
-package com.example.projectfinalandroid.ui.login
+package com.example.projectfinalandroid.viewModels
 
 import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.projectfinalandroid.data.LoginRepository
+import com.example.projectfinalandroid.repositories.LoginRepository
 import com.example.projectfinalandroid.data.Result
-import com.example.projectfinalandroid.data.model.LoggedInUser
 
 import com.example.projectfinalandroid.R
+import com.example.projectfinalandroid.models.LoggedInUserView
+import com.example.projectfinalandroid.models.LoginFormState
+import com.example.projectfinalandroid.models.LoginResult
 
 class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
 

@@ -4,13 +4,14 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.example.projectfinalandroid.api.LoginApiService
 import com.example.projectfinalandroid.api.RetrofitInstance
-import com.example.projectfinalandroid.api.LoginRequest
-import com.example.projectfinalandroid.data.model.LoggedInUser
+import com.example.projectfinalandroid.models.LoggedInUser
+import com.example.projectfinalandroid.models.LoginRequest
 import com.google.gson.JsonParser
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.IOException
+import java.util.UUID
 
 class LoginDataSource(private val context: Context) {
 
@@ -28,7 +29,7 @@ class LoginDataSource(private val context: Context) {
 
                     saveUserId(userId)
 
-                    val user = LoggedInUser(java.util.UUID.randomUUID().toString(), userId)
+                    val user = LoggedInUser(UUID.randomUUID().toString(), userId)
                     callback(Result.Success(user))
                 } else {
                     callback(Result.Error(IOException("Error logging in, response unsuccessful")))
@@ -43,9 +44,5 @@ class LoginDataSource(private val context: Context) {
 
     private fun saveUserId(userId: String) {
         sharedPreferences.edit().putString("user_id", userId).apply()
-    }
-
-    fun logout() {
-        // TODO: revoke authentication
     }
 }

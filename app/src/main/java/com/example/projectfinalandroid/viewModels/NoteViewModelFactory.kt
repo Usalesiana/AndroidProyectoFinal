@@ -1,4 +1,4 @@
-package com.example.projectfinalandroid.models
+package com.example.projectfinalandroid.viewModels
 
 import android.content.Context
 import androidx.lifecycle.ViewModel

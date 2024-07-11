@@ -11,6 +11,7 @@ import retrofit2.awaitResponse
 
 class NoteRepository(private val noteDao: NoteDao,
                      private val noteApiService: NoteApiService, val context: Context) {
+
     val notes = noteDao.getAllNotes()
     private val sharedPreferences: SharedPreferences = context.getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
 
@@ -37,6 +38,7 @@ class NoteRepository(private val noteDao: NoteDao,
         val call = noteApiService.putNote(note)
         val response = call.awaitResponse()
         if (response.isSuccessful){
+            noteDao.clearNotes()
             getAll().collect(){}
         }
     }
@@ -46,7 +48,7 @@ class NoteRepository(private val noteDao: NoteDao,
             noteDao.clearNotes()
             getAll().collect {}
         } else {
-            error("No se pudo eliminar la nota")
+            error("Error deleting the note")
         }
     }
 
