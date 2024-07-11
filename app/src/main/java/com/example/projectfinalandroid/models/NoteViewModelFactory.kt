@@ -16,7 +16,7 @@ class NoteViewModelFactory(val context: Context): ViewModelProvider.Factory{
             val noteApiService = RetrofitInstance.getInstance()
                 .create(NoteApiService::class.java)
             val notesRepository = NoteRepository(notesDao, noteApiService)
-            return NoteViewModel(notesRepository) as T
+            return NoteViewModel(notesRepository, context) as T
         }
         return super.create(modelClass)
     }
