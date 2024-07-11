@@ -105,7 +105,7 @@ class NoteViewModel(val repository: NoteRepository, val context: Context) : View
         return sharedPreferences.getString("user_id", null)
     }
 
-    fun getAllContacts() = viewModelScope.launch {
+    fun getAllNotes() = viewModelScope.launch {
         repository.getAll().collect { result ->
             if (!result) {
                 //API errors

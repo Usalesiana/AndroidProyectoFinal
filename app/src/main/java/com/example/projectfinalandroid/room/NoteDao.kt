@@ -17,9 +17,12 @@ interface NoteDao {
     suspend fun updateNote(note: Note)
     @Delete
     suspend fun deleteNote(note: Note)
-
     @Query("SELECT * FROM notes")
     fun getAllNotes(): LiveData<List<Note>>
+
+    @Query("DELETE FROM Notes")
+    suspend fun clearNotes()
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(notes: List<Note>)
 }
